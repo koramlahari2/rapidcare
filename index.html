@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RapidCare | Emergency Response</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="auth-overlay" class="overlay">
+        <div class="auth-card">
+            <h2 id="auth-title">RapidCare</h2>
+            <p id="auth-subtitle">Safety through voice activation.</p>
+            
+            <div id="login-form">
+                <input type="email" id="login-email" placeholder="Email Address">
+                <input type="password" id="login-pass" placeholder="Password">
+                <button class="main-btn" onclick="closeAuth()">Login</button>
+                <p class="toggle-text">New here? <span onclick="toggleAuth()">Create Account</span></p>
+            </div>
+
+            <div id="signup-form" style="display:none;">
+                <input type="text" id="signup-name" placeholder="Full Name">
+                <input type="email" id="signup-email" placeholder="Email Address">
+                <input type="password" id="signup-pass" placeholder="Create Password">
+                <input type="tel" id="user-emergency-phone" placeholder="Emergency Phone Number (e.g. +123456789)">
+                <button class="main-btn" onclick="handleSignup()">Sign Up</button>
+                <p class="toggle-text">Already have an account? <span onclick="toggleAuth()">Login</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-text">
+                <h1>RapidCare</h1>
+                <p id="status-text">Status: <span>Disarmed</span></p>
+            </div>
+            <button id="master-toggle" onclick="toggleSystem()">ACTIVATE SYSTEM</button>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Voice Trigger</h3>
+                <label>Set Code Word</label>
+                <input type="text" id="code-word" placeholder="e.g. Pineapple" onchange="saveSettings()">
+                <small>Choose a unique word you don't say often.</small>
+                
+                <label style="margin-top: 15px; display: block;">Custom SOS Message</label>
+                <textarea id="custom-msg" placeholder="I am in trouble, check my location..." onchange="saveSettings()"></textarea>
+            </div>
+
+            <div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0;">Emergency Circle</h3>
+        <div id="listening-indicator" class="status-pill offline">
+            <span class="dot"></span> 
+            <span class="status-text">OFFLINE</span>
+        </div>
+    </div>
+    
+    <div class="contact-display">
+        <div class="contact-info">
+            <p><strong>Primary Phone:</strong> <span id="display-phone">Not Set</span></p>
+            <p><strong>Primary Email:</strong> <span id="display-email">Not Set</span></p>
+        </div>
+    </div>
+
+    <div class="setup-form" style="margin-top: 20px;">
+        <p style="font-size: 0.8rem; color: var(--text-dim);">Update details below:</p>
+        <input type="tel" id="update-phone" placeholder="Phone Number">
+        <input type="email" id="update-email" placeholder="Email Address">
+        <button class="action-btn" onclick="updateContactDetails()">Save to Circle</button>
+    </div>
+</div>
+
+            <div class="card wide">
+                <h3>Activity Log</h3>
+                <div id="activity-log" class="log-container">
+                    <p class="log-entry">Waiting for system activation...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 1. The EmailJS Library -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<!-- 2. Your Config (Now with the correct folder path) -->
+<script src="config.js"></script>
+
+<!-- 3. The Initialization Logic -->
+<script type="text/javascript">
+    (function() {
+        // We check if CONFIG loaded from the folder before initializing
+        if (typeof CONFIG !== 'undefined') {
+            emailjs.init(CONFIG.PUBLIC_KEY);
+            console.log("✅ EmailJS Initialized with Config");
+        } else {
+            console.error("❌ Still can't find CONFIG. Check the folder name!");
+        }
+    })();
+</script>
+
+<!-- 4. Your Main Logic -->
+<script src="main.js"></script>
+
+</body>
+</html>
